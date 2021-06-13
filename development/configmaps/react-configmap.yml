@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: react-configmap
+  namespace: project-development
+
+data:
+  web.properties: |
+    window.BACKEND_PATH= "http://localhost/development/api/"

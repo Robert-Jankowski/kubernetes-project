@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: project-development
+  labels:
+    name: ingress
+  annotations:
+    kubernetes.io.ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: "/development/api/?(.*)"
+            pathType: Prefix
+            backend:
+              service:
+                name: express-clusterip
+                port:
+                  name: express-port
+          - path: "/development(.*)"
+            pathType: Prefix
+            backend:
+              service:
+                name: react-clusterip
+                port:
+                  name: react-port

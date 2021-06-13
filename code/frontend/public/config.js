@@ -1,0 +1,1 @@
+window.BACKEND_PATH = "http://localhost/api/"

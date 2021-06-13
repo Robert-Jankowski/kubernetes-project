@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deployment
+  namespace: project-development
+spec:
+  selector:
+    matchLabels:
+      type: frontend
+      instance: react
+  replicas: 1
+  template:
+    metadata:
+      name: react-pod
+      namespace: project-development
+      labels:
+        type: frontend
+        instance: react
+
+    spec:
+      containers:
+        - name: react-container
+          image: robertjankowski/devops-project-frontend:dev-1.1
+          volumeMounts:
+            - name: config
+              mountPath: "/usr/share/nginx/html/config.js"
+              subPath: "config.js"
+      volumes:
+        - name: config
+          configMap:
+            name: react-configmap
+            items:
+              - key: "web.properties"
+                path: "config.js"

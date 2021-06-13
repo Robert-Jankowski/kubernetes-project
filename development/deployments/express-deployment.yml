@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-deployment
+  namespace: project-development
+spec:
+  selector:
+    matchLabels:
+      type: backend
+      instance: express
+  replicas: 2
+  template:
+    metadata:
+      name: express-pod
+      namespace: project-development
+      labels:
+        type: backend
+        instance: express
+
+    spec:
+      containers:
+        - name: express-container
+          image: robertjankowski/devops-project-backend:dev-1.1
+          envFrom:
+            - configMapRef:
+                name: express-configmap
+            - configMapRef:
+                name: mongo-configmap
